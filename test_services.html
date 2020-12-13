@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test AJAX services and Promise</title>
+    <style>
+      .body{
+        margin: auto;
+      }
+      div{
+        border: 1px solid #000000;
+        background-color: #add8e6;
+        padding: 50px;
+        width: 80%;
+        font-size: xx-large;
+        margin-top: 50px;
+      }
+    </style>
+    <script src="http_services.js"></script>
+  </head>
+  <body>
+      <h1>Test Services Result</h1>
+      <div id="GET_services"></div>
+      <div id="DELETE_services"></div>
+      <div id="POST_services"></div>
+
+      <script>
+        const getElement=document.querySelector("#GET_services");
+        const getURL="http://127.0.0.1:3000/employees/1";
+        makePromiseCall("GET",getURL,true)
+          .then(responseText =>{
+            getElement.textContent="Get employee data: "+responseText;
+        })
+          .catch(error => {
+            getElement.textContent="GET Error status: "+JSON.stringify(error);
+          });
+        
+        const deleteElement=document.querySelector("#DELETE_services");
+        const deleteURL="http://127.0.0.1:3000/employees/4";
+        makePromiseCall("DELETE",deleteURL,false)
+          .then(responseText =>{
+            deleteElement.textContent="Employee deleted: "+responseText;
+          })
+          .catch(error => {
+            deleteElement.textContent="DELETE Error status: "+JSON.stringify(error);
+          });
+
+        const postElement=document.querySelector("#POST_services");
+        const postURL="http://127.0.0.1:3000/employees";
+        const employeeData={"name":"Gunjan","salary":"5000000"}
+        makePromiseCall("POST",postURL,true,employeeData)
+          .then(responseText =>{
+            postElement.textContent="Employee added: "+responseText;
+          })
+          .catch(error => {
+            postElement.textContent="POST Error status: "+JSON.stringify(error);
+          });
+      </script>
+  </body>
+</html>
